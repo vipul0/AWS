@@ -1,0 +1,9 @@
+# Template to launch a instance that is basically free, the configuration is 1Gb ram, 8Gb hdd basically this is free amazon 
+# (Amazon Linux AMI 2018.03.0 (HVM), SSD Volume Type - ami-b46f48db)
+
+# aws ec2 create-launch-template --launch-template-name TemplateForWebServer --version-description WebVersion1 --launch-template-data '{"NetworkInterfaces":[{"AssociatePublicIpAddress":true,"DeviceIndex":0,"Ipv6AddressCount":1,"SubnetId":"subnet-7b16de0c"}],"ImageId":"ami-8c1be5f6","InstanceType":"t2.small","TagSpecifications":[{"ResourceType":"instance","Tags":[{"Key":"Name","Value":"webserver"}]}]}'
+
+
+
+
+#
