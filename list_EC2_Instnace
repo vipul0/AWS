@@ -1,0 +1,28 @@
+#!/bin/bash python
+import boto3
+
+#save the credentials in ~/.aws/credential and defualt region in ~/.aws/config
+
+
+def get_session():  
+    return boto3.session.Session(region_name='ap-south-1')
+    
+session = get_session()
+client = session.client('ec2')
+
+AMI_detail = client.describe_images(Owners=['self'])
+
+fin=AMI_detail['Images']
+
+All_AMI=[]
+
+All_AMI_Count=0
+
+for i in fin:
+    ImageId=i["ImageId"]
+    All_AMI.append((ImageId))
+    All_AMI_Count=All_AMI_Count+1
+    
+print(All_AMI_Count)
+
+print(All_AMI)
