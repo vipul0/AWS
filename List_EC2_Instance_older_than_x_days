@@ -1,0 +1,40 @@
+#!/bin/bash python
+
+import boto3
+
+from datetime import datetime
+
+def get_session():  
+    return boto3.session.Session(region_name='ap-south-1')
+
+
+
+session = get_session()
+client = session.client('ec2')
+
+
+AMI_detail = client.describe_images(Owners=['self'])
+
+fin=AMI_detail['Images']
+
+today=datetime.today()
+
+Old_AMI=[]
+
+Old_AMI_Count=0
+
+for i in fin:
+    CreationDate=i["CreationDate"].split('T')[0]
+    date_creation = datetime.strptime(CreationDate,"%Y-%m-%d")
+    if (today-date_creation).days>90:
+        ImageId=i["ImageId"]
+        ImageLocation=i["ImageLocation"]
+        Name=i["Name"]
+        OwnerId=i["OwnerId"]
+        Description=i["Description"]
+        State=i["State"]
+        Old_AMI.append(("Data Of AMI \n AMI Name: {0} \n Image Id: {1} \n Description: {2} \n Creation Date: {3}\n Image Location: {4} \n Owner Id: {5} \n State: {6} ").format(Name,ImageId,Description,CreationDate,ImageLocation,OwnerId,State))
+        Old_AMI_Count=Old_AMI_Count+1
+
+print(Old_AMI_Count)
+
